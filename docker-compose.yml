@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  market_db:
+    image: mysql:latest
+    restart: always
+    volumes:
+      - D:/a_KGN/usedMarket/data/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=market
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    ports:
+      - "3306:33060"
+
+  api:
+    build: ./api
+    restart: always
+    command: bash -c "python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - D:/a_KGN/usedMarket/api:/back
+    ports:
+      - "8000:8000"
+    environment:
+      - MYSQL_HOST=market_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_NAME=market
+      - MYSQL_DB=market
+    depends_on:
+      - market_db
+
+  client:
+    build: ./client
+    command: npm start
+    volumes:
+      - D:/a_KGN/usedMarket/client:/front
+      - D:/a_KGN/usedMarket/client/node_modules:/front/node_modules
+    ports:
+      - "8080:3000"
+    expose:
+      - 8080
+    depends_on:
+      - api
