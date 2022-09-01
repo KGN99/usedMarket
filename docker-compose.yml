@@ -40,11 +40,20 @@ services:
     depends_on:
       - api
 
-  nginx:
+  client_web:
     restart: always
-    container_name: nginx
-    build: ./nginx
+    container_name: nginx_client
+    build: ./nginx/client
     ports:
       - "8080:80"
     depends_on:
       - client
+
+  api_web:
+    restart: always
+    container_name: nginx_api
+    build: ./nginx/api
+    ports:
+      - "8081:80"
+    depends_on:
+      - api
