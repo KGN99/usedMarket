@@ -20,6 +20,8 @@ services:
     command: bash -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
       - D:/a_KGN/usedMarket/api:/back
+      - static_volume:/back/static
+
     ports:
       - "8000:8000"
     environment:
@@ -53,7 +55,11 @@ services:
     restart: always
     container_name: nginx_api
     build: ./nginx/api
+    volumes:
+      - static_volume:/back/static
     ports:
       - "8081:80"
     depends_on:
       - api
+volumes:
+  static_volume:
