@@ -1,2 +1,9 @@
 django
 mysqlclient
+dj-rest-auth
+djangorestframework
+django-filter
+django-allauth
+djangorestframework-simplejwt
+pillow
+django-cors-headers
