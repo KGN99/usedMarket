@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
+@import "antd/dist/antd.css";
+.top_bar {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(1, 1fr);
+  margin: 5px auto;
+  text-align: right;
+  align-items: right;
+  width: 850px;
+  height: 20px;
+  .top_bar_right {
+    font-size: 12px;
+    justify-self: right;
+    margin-top: -13px;
+  }
+}
+.header {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: "logo search top_nav";
+  margin: 5px auto;
+  width: 850px;
+
+  .logo {
+    display: inline-block;
+    color: #fe4d4d;
+    margin-top: 8px;
+    font-family: "Do Hyeon", sans-serif;
+    font-size: 35px;
+    grid-area: logo;
+    justify-self: left;
+    .nav {
+      font-size: 20px;
+      margin-top: -20px;
+      color: black;
+    }
+  }
+  .search {
+    margin-left: -100px;
+    margin-top: 15px;
+    grid-area: search;
+    justify-self: center;
+  }
+  .top_nav {
+    font-family: "Dongle", sans-serif;
+    margin-top: 21px;
+    font-size: 17px;
+    grid-area: top_nav;
+    justify-self: right;
+  }
+}

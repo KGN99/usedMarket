@@ -1,1 +1,8 @@
 react
+axios
+axios-hooks
+react-router-dom
+node-sass
+react-cookie
+antd
+antd-img-crop

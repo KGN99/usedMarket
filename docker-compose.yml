@@ -21,9 +21,6 @@ services:
     volumes:
       - D:/a_KGN/usedMarket/api:/back
       - static_volume:/back/static
-
-    ports:
-      - "8000:8000"
     environment:
       - MYSQL_HOST=market_db
       - MYSQL_USER=user
