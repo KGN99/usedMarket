@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Input, Space } from "antd";
 import {
   DollarCircleOutlined,
@@ -11,14 +12,29 @@ import "scss/Header.scss";
 export default function Header() {
   const navigate = useNavigate();
 
+  // 스토어 Access Token 정보
+  const { accessToken } = useSelector((state) => state.token);
+
   return (
     <div>
       <div className="top_bar" style={{ marginTop: 20, marginBottom: -15 }}>
         <div className="top_bar_right">
           <Space>
-            <div style={{ cursor: "pointer" }}>
-              <p>로그인/회원가입</p>
-            </div>
+            {accessToken ? (
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate("/accounts/logout")}
+              >
+                <p>로그아웃</p>
+              </div>
+            ) : (
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate("/accounts/login")}
+              >
+                <p>로그인/회원가입</p>
+              </div>
+            )}
             <div style={{ cursor: "pointer" }}>
               <p>내상점</p>
             </div>
