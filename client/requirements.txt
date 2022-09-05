@@ -6,3 +6,6 @@ node-sass
 react-cookie
 antd
 antd-img-crop
+react-cookie
+redux@4.1.2 react-redux @reduxjs/toolkit
+redux-persist
