@@ -156,4 +156,11 @@ OLD_PASSWORD_FIELD_ENABLED = True
 LOGOUT_ON_PASSWORD_CHANGE = False
 # corsheader 화이트 리스트
 if DEBUG:
-    CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']
+    CSRF_TRUSTED_ORIGINS = [
+        'http://localhost:8000',
+        'http://localhost:3000'
+    ]
+    CORS_ORIGIN_WHITELIST = [
+        "http://localhost:3000",
+        "http://localhost:8000",
+    ]
