@@ -44,7 +44,7 @@ services:
     container_name: nginx_client
     build: ./nginx/client
     ports:
-      - "8080:80"
+      - "3000:8080"
     depends_on:
       - client
 
@@ -55,7 +55,7 @@ services:
     volumes:
       - static_volume:/back/static
     ports:
-      - "8081:80"
+      - "8000:8081"
     depends_on:
       - api
 volumes:
