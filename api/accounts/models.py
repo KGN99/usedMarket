@@ -4,7 +4,7 @@ from django.utils import timezone
 
 # 유저 아바타 이미지 저장 경로 커스텀
 def avatar_url_path(instance,filename):
-    path = f"accounts/{instance.username}/avatar/{filename}"
+    path = f"accounts/{instance.email}/avatar/{filename}"
     return path
 
 class UserManager(BaseUserManager):

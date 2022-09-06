@@ -10,9 +10,7 @@ export default function PasswordChange({ userData }) {
   const navigate = useNavigate();
   const [fieldErrors, setFieldErrors] = useState({});
 
-  const { authenticated, accessToken, expireTime } = useSelector(
-    (state) => state.token
-  );
+  const { accessToken } = useSelector((state) => state.token);
   const headers = { Authorization: `Bearer ${accessToken}` };
 
   //비밀번호 유효성 검사
