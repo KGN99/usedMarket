@@ -1,3 +1,5 @@
 .idea
 client/node_modules
 data
+api/static/
+api/media/
