@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { getUserData } from "utils/storage/Cookie";
 import { Input, Space } from "antd";
 import {
   DollarCircleOutlined,
@@ -14,7 +15,7 @@ export default function Header() {
 
   // 스토어 Access Token 정보
   const { accessToken } = useSelector((state) => state.token);
-
+  const logedUserPk = getUserData();
   return (
     <div>
       <div className="top_bar" style={{ marginTop: 20, marginBottom: -15 }}>
@@ -35,7 +36,10 @@ export default function Header() {
                 <p>로그인/회원가입</p>
               </div>
             )}
-            <div style={{ cursor: "pointer" }}>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(`accounts/profile/${logedUserPk}`)}
+            >
               <p>내상점</p>
             </div>
           </Space>

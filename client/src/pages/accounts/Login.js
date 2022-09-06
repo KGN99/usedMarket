@@ -24,8 +24,9 @@ export default function Login() {
       const response = await axiosInstance.post("/accounts/login/", data);
       // refresh토큰 쿠키에 저장, acess토큰 로컬에 저장
       setRefreshToken(response.data.refresh_token);
-      setUserData(response.data.user.pk);
       dispatch(SET_TOKEN(response.data.access_token));
+      // 로그인한 유저 pk 저장
+      setUserData(response.data.user.pk);
       notification.open({
         message: "로그인 성공",
         description: "메인 페이지로 이동합니다.",

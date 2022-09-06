@@ -6,7 +6,7 @@ import { axiosInstance } from "api";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import "scss/Signup.scss";
 
-export default function PasswordChange({ userData }) {
+export default function PasswordChange() {
   const navigate = useNavigate();
   const [fieldErrors, setFieldErrors] = useState({});
 
@@ -15,7 +15,7 @@ export default function PasswordChange({ userData }) {
 
   //비밀번호 유효성 검사
   const validatePassword = useCallback((_, value) => {
-    const regExp =
+    const regExp = // eslint-disable-next-line
       /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-z]{1,50})(?=.*[A-Z]{1,50}).{8,50}$/;
     if (!value) {
       return Promise.reject(new Error("비밀번호를 입력해주세요!"));

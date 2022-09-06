@@ -2,10 +2,10 @@ import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
 
-export const setRefreshToken = (refreshToken, pk, email) => {
+export const setRefreshToken = (refreshToken) => {
   // 유효기간 설정
   const today = new Date();
-  const expireDate = today.setDate(today.getHours() + 1);
+  const expireDate = today.setDate(today.getDate() + 1);
   return cookies.set("refresh_token", refreshToken, {
     sameSite: "strict",
     path: "/",
@@ -16,8 +16,12 @@ export const setRefreshToken = (refreshToken, pk, email) => {
 export const setUserData = (pk) => {
   // 유효기간 설정
   const today = new Date();
-  const expireDate = today.setDate(today.getHours() + 1);
-  return cookies.set("loged_user_pk", pk, { expires: new Date(expireDate) });
+  const expireDate = today.setDate(today.getDate() + 1);
+  return cookies.set("loged_user_pk", pk, {
+    sameSite: "strict",
+    path: "/",
+    expires: new Date(expireDate),
+  });
 };
 
 export const getCookieToken = () => {
@@ -33,5 +37,5 @@ export const getUserData = () => {
 };
 
 export const removeUserData = () => {
-  return cookies.remove("loged_user_pk");
+  return cookies.remove("loged_user_pk", { sameSite: "strict", path: "/" });
 };

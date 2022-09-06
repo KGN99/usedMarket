@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+.main {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(1, 1fr);
+  margin: 5px auto;
+  width: 850px;
+  .profileImage{
+    .profile_related{
+      font-family: 'Noto Sans KR', sans-serif;
+      margin-left: 50px;
+      font-size: 20px;
+      .profile_related_button{
+        margin-top: 145px;
+      }
+    }
+  }
+}
+
+
+.myProducts{
+  font-family: 'Noto Sans KR', sans-serif;
+    font-size: 20px;
+}
+.product_list {
+  width: 865px;
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}

@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from os.path import join
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -165,3 +166,9 @@ if DEBUG:
         "http://localhost:3000",
         "http://localhost:8000",
     ]
+
+# api 부분 토큰 유효 시간 설정
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=1),
+}

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// 토큰 유효시간
-
+// 로컬 스토리지 access토큰 저장
 export const tokenSlice = createSlice({
   name: "token",
   initialState: {
