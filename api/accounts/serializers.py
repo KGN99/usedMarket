@@ -10,3 +10,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = ["pk", "email", "username","avatar", "avatar_url"]
 
+# 사용자 프로필 수정 / only 사용자 이름, 아바타
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ["username","avatar"]
+
