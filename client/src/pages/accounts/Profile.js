@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useAxios } from "api";
 import { Button } from "antd";
@@ -14,12 +14,14 @@ export default function Profile() {
   const { accessToken } = useSelector((state) => state.token);
   const logedUserPk = getUserData();
   const headers = { Authorization: `Bearer ${accessToken}` };
+
   const [{ data: userProfileData, loading, error }, refetch] = useAxios({
     url: `/accounts/profile/${params.id}`,
     headers,
   });
+
   if (userProfileData) {
-    const { pk, email, username, avatar_url } = userProfileData;
+    const { email, username, avatar_url } = userProfileData;
     return (
       <div className="main">
         <hr style={{ width: "100%" }} size="1" color="#000000" />
@@ -48,6 +50,9 @@ export default function Profile() {
                         fontSize: 20,
                         color: "white",
                       }}
+                      onClick={() =>
+                        navigate(`/accounts/profile/${logedUserPk}/update`)
+                      }
                     >
                       회원정보 수정
                     </Button>
@@ -61,6 +66,7 @@ export default function Profile() {
                         fontSize: 20,
                         color: "white",
                       }}
+                      onClick={() => navigate("/accounts/password_change")}
                     >
                       비밀번호 변경
                     </Button>
