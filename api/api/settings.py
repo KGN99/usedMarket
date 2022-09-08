@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'corsheaders',
     # local
     'accounts',
+    'contents',
 ]
 SITE_ID = 1
 
