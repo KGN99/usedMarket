@@ -1,10 +1,11 @@
 from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
-from .models import Product
-from contents.serializers import ProductSerializers
+from .models import Product,ProductImage
+from contents.serializers import ProductSerializers,ProductImageSerializer
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny
 
 # 상품 목록/생성
-class ProductListCreateGenericAPIView(ListCreateAPIView):
+class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializers
 

@@ -44,5 +44,6 @@ class Category(TimeStampedModel):
         return self.category_name
 
 class ProductImage(models.Model):
-    product_id = models.ForeignKey("Product",related_name="product_image",on_delete=models.CASCADE)
-    product_image = models.ImageField(upload_to=product_images_url, verbose_name="상품 이미지")
+    writer = models.TextField()
+    product = models.ForeignKey("Product",on_delete=models.CASCADE)
+    product_image = models.ImageField(upload_to=product_images_url)
