@@ -7,5 +7,4 @@ router.register(r'products', views.ProductViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("products/<int:pk>/",views.ProductRetrieveUpdateDestroyGenericAPIView.as_view()),
 ]
