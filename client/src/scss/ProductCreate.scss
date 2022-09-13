@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+.product_create {
+  font-family: "Noto Sans KR", sans-serif;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(1, 1fr);
+  margin: 5px auto;
+  width: 850px;
+
+  .basic_information {
+    margin-top: 20px;
+    font-size: 27px;
+    border-bottom: 2px solid #000000;
+    height: 70px;
+  }
+  .product_form {
+    display: flex;
+    font-size: 18px;
+    border-bottom: 1px solid #e8e8e8;
+    p {
+      width: 170px;
+    }
+  }
+}
