@@ -2,6 +2,12 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import Product,ProductImage
 
+# 유저 시리얼라이저
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ["id","email", "username", "avatar_url"]
+
 # 상품 이미지
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,6 +16,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 # 상품 목록/생성
 class ProductSerializers(serializers.ModelSerializer):
+    writer = AuthorSerializer(read_only=True)
     # ProductImage를 Product에서 같이 관리
     images = serializers.SerializerMethodField()
 
@@ -19,7 +26,7 @@ class ProductSerializers(serializers.ModelSerializer):
         return ProductImageSerializer(instance=product_image, many=True).data
 
     def create(self, validated_data):
-        product = Product.objects.create(**validated_data)
+        product = Product.objects.create( writer_id=self.context['request'].user.id,**validated_data)
         images_data = self.context['request'].FILES
         for image_data in images_data.getlist('product_image'):
             ProductImage.objects.create(product=product, product_image=image_data)
