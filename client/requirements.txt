@@ -9,4 +9,4 @@ antd-img-crop
 react-cookie
 redux@4.1.2 react-redux @reduxjs/toolkit
 redux-persist
-antd-img-crop
+react-simple-image-slider

@@ -72,8 +72,6 @@ export default function ProfileUpdate() {
     return Promise.resolve();
   }, []);
 
-  const handleCancel = () => setPreviewOpen(false);
-
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);

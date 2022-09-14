@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { getUserData } from "utils/storage/Cookie";
+import Resizer from "react-image-file-resizer";
 import { Upload, notification, Select, Input, Radio, Button, Form } from "antd";
 import { FrownOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { axiosInstance } from "api";
+import ImgCrop from "antd-img-crop";
 import "scss/ProductCreate.scss";
+import "antd/es/modal/style";
+import "antd/es/slider/style";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -29,7 +32,6 @@ export default function ProductCreate() {
   };
 
   const { accessToken } = useSelector((state) => state.token);
-  const logedUserPk = getUserData();
   const headers = { Authorization: `Bearer ${accessToken}` };
 
   const [conditionValue, setConditionValue] = useState("used");
@@ -46,16 +48,6 @@ export default function ProductCreate() {
   const [descValue, setDescValue] = useState();
 
   const [countValue, setQuantityValue] = useState(1);
-
-  const [previewPhoto, setPreviewPhoto] = useState({
-    visible: false,
-    base64: null,
-  });
-  const [fieldErrors, setFieldErrors] = useState({});
-
-  const imageOnChange = ({ fileList }) => {
-    setFileList(fileList);
-  };
 
   const conditionOnChange = (e) => {
     setConditionValue(e.target.value);
@@ -97,7 +89,9 @@ export default function ProductCreate() {
     );
   };
 
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const handleChange = ({ fileList }) => {
+    setFileList(fileList);
+  };
 
   const handleFinish = async (fieldValues) => {
     const {
@@ -110,7 +104,6 @@ export default function ProductCreate() {
       product_price,
       product_desc,
       product_count,
-      product_image: { fileList },
     } = fieldValues;
 
     const formData = new FormData();

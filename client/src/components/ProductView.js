@@ -1,8 +1,12 @@
 import React from "react";
-import { Card } from "antd";
+import { Card, Image } from "antd";
 import { API_HOST } from "utils/Constants";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import "moment/locale/ko";
+import "scss/ProductView.scss";
+
+moment.locale("ko");
 
 export default function Product({ product }) {
   const navigate = useNavigate();
@@ -13,16 +17,14 @@ export default function Product({ product }) {
   return (
     <div>
       <Card
-        style={{ height: 300, width: 155, marginRight: 15, marginTop: 15 }}
+        style={{ height: 270, width: 155, marginRight: 15, marginTop: 15 }}
         className="product_card"
         hoverable
         onClick={onClick}
         cover={
-          <img
-            src={API_HOST + images[0].product_image}
-            alt={product_name}
-            style={{ height: 200, width: 154 }}
-          />
+          <div className="img-wrapper">
+            <img src={API_HOST + images[0].product_image} alt={product_name} />
+          </div>
         }
       >
         <Card.Meta
