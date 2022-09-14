@@ -26,7 +26,7 @@ class ProductSerializers(serializers.ModelSerializer):
         return ProductImageSerializer(instance=product_image, many=True).data
 
     def create(self, validated_data):
-        product = Product.objects.create( writer_id=self.context['request'].user.id,**validated_data)
+        product = Product.objects.create(writer_id=self.context['request'].user.id,**validated_data)
         images_data = self.context['request'].FILES
         for image_data in images_data.getlist('product_image'):
             ProductImage.objects.create(product=product, product_image=image_data)
@@ -47,6 +47,9 @@ class ProductSerializers(serializers.ModelSerializer):
             ProductImage.objects.create(product=instance, product_image=image_data)
         return instance
 
+    def delete(self,instance,validated_data):
+        return Product.objects.filter(id=instance.id).delete()
+    
     class Meta:
         model = Product
         fields = [
