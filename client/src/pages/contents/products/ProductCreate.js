@@ -36,7 +36,6 @@ export default function ProductCreate() {
 
   const [conditionValue, setConditionValue] = useState("used");
   const [exchangeValue, setExchangeValue] = useState("non_exchangeable");
-  const [deliveryValue, setDeliveryValue] = useState("not_included");
   const [nameValue, setNameValue] = useState();
 
   const [categoryValue, setCategoryValue] = useState("기타");
@@ -51,9 +50,6 @@ export default function ProductCreate() {
 
   const conditionOnChange = (e) => {
     setConditionValue(e.target.value);
-  };
-  const deliveryOnChange = (e) => {
-    setDeliveryValue(e.target.value);
   };
 
   const exchangeOnChange = (e) => {
@@ -100,7 +96,6 @@ export default function ProductCreate() {
       trading_location,
       product_condition,
       exchange_or_not,
-      delivery_included,
       product_price,
       product_desc,
       product_count,
@@ -112,7 +107,6 @@ export default function ProductCreate() {
     formData.append("trading_location", trading_location);
     formData.append("product_condition", product_condition);
     formData.append("exchange_or_not", exchange_or_not);
-    formData.append("delivery_included", delivery_included);
     formData.append("product_price", product_price);
     formData.append("product_desc", product_desc);
     formData.append("product_count", product_count);
@@ -230,18 +224,6 @@ export default function ProductCreate() {
                 <Radio.Group onChange={exchangeOnChange} value={exchangeValue}>
                   <Radio value={"교환불가"}>교환불가</Radio>
                   <Radio value={"교환가능"}>교환가능</Radio>
-                </Radio.Group>
-              </Form.Item>
-            </div>
-            <div className="product_form" style={{ height: 60 }}>
-              <p>배송비</p>
-              <Form.Item
-                name="delivery_included"
-                initialValue={"배송비 미포함"}
-              >
-                <Radio.Group onChange={deliveryOnChange} value={deliveryValue}>
-                  <Radio value={"배송비 미포함"}>배송비 미포함</Radio>
-                  <Radio value={"배송비 포함"}>배송비 포함</Radio>
                 </Radio.Group>
               </Form.Item>
             </div>
