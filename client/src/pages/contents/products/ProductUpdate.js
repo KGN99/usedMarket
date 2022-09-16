@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getUserData } from "utils/storage/Cookie";
 import { useSelector } from "react-redux";
-import Resizer from "react-image-file-resizer";
+import { useParams } from "react-router-dom";
+import { API_HOST } from "utils/Constants";
 import { Upload, notification, Select, Input, Radio, Button, Form } from "antd";
 import { FrownOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
-import { axiosInstance } from "api";
-import ImgCrop from "antd-img-crop";
+import { axiosInstance, useAxios } from "api";
 import "scss/ProductCreate.scss";
-import "antd/es/modal/style";
-import "antd/es/slider/style";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -20,34 +19,51 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-export default function ProductCreate() {
+export default function ProductUpdate({ data }) {
+  const params = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const {
+    id,
+    writer,
+    product_name,
+    product_price,
+    product_condition,
+    exchange_or_not,
+    trading_location,
+    product_desc,
+    images,
+    product_count,
+    product_category,
+    created_at,
+  } = data;
+  const { id: user_id } = writer;
+
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([]);
-  const { from: loginRequiredUrl } = location.state || {
-    from: { pathname: "/" },
-  };
 
+  const logedUserPk = getUserData();
   const { accessToken } = useSelector((state) => state.token);
   const headers = { Authorization: `Bearer ${accessToken}` };
 
-  const [conditionValue, setConditionValue] = useState("used");
-  const [exchangeValue, setExchangeValue] = useState("non_exchangeable");
-  const [nameValue, setNameValue] = useState();
-
-  const [categoryValue, setCategoryValue] = useState("기타");
-
-  const [locationValue, setLocationValue] = useState();
-
-  const [priceValue, setPriceValue] = useState();
-
-  const [descValue, setDescValue] = useState();
-
-  const [countValue, setQuantityValue] = useState(1);
-
+  const [conditionValue, setConditionValue] = useState(product_condition);
+  const [exchangeValue, setExchangeValue] = useState(exchange_or_not);
+  const [nameValue, setNameValue] = useState(product_name);
+  const [categoryValue, setCategoryValue] = useState(product_category);
+  const [locationValue, setLocationValue] = useState(trading_location);
+  const [priceValue, setPriceValue] = useState(product_price);
+  const [descValue, setDescValue] = useState(product_desc);
+  const [countValue, setQuantityValue] = useState(product_count);
+  const [fileList, setFileList] = useState([
+    images.map((image) => ({
+      uid: image.id,
+      name: image.id,
+      status: "done",
+      url: API_HOST + image.product_image,
+    })),
+  ]);
   const conditionOnChange = (e) => {
     setConditionValue(e.target.value);
   };
@@ -73,6 +89,7 @@ export default function ProductCreate() {
   const countOnChange = (e) => {
     setQuantityValue(e.target.value);
   };
+
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -91,49 +108,48 @@ export default function ProductCreate() {
 
   const handleFinish = async (fieldValues) => {
     const {
-      product_name,
-      product_category,
-      trading_location,
-      product_condition,
-      exchange_or_not,
-      product_price,
-      product_desc,
-      product_count,
+      product_name: form_product_name,
+      product_category: form_product_category,
+      trading_location: form_trading_location,
+      product_condition: form_product_condition,
+      exchange_or_not: form_exchange_or_not,
+      product_price: form_product_price,
+      product_desc: form_product_desc,
+      product_count: form_product_count,
     } = fieldValues;
 
     const formData = new FormData();
-    formData.append("product_name", product_name);
-    formData.append("product_category", product_category);
-    formData.append("trading_location", trading_location);
-    formData.append("product_condition", product_condition);
-    formData.append("exchange_or_not", exchange_or_not);
-    formData.append("product_price", product_price);
-    formData.append("product_desc", product_desc);
-    formData.append("product_count", product_count);
+    formData.append("product_name", form_product_name);
+    formData.append("product_category", form_product_category);
+    formData.append("trading_location", form_trading_location);
+    formData.append("product_condition", form_product_condition);
+    formData.append("exchange_or_not", form_exchange_or_not);
+    formData.append("product_price", form_product_price);
+    formData.append("product_desc", form_product_desc);
+    formData.append("product_count", form_product_count);
     fileList.forEach((file) => {
       formData.append("product_image", file.originFileObj);
     });
-
     try {
-      const response = await axiosInstance.post(
-        "/contents/products/",
+      const response = await axiosInstance.put(
+        `/contents/products/${params.id}/`,
         formData,
         {
           headers,
         }
       );
-      navigate("/");
+      navigate(`/contents/products/${params.id}`);
       window.location.reload();
     } catch (error) {
-      console.log(error.response);
       if (error.response) {
         const { status, data: fieldsErrorMessages } = error.response;
-        if (typeof fieldsErrorMessages === "string") {
+        if (fieldsErrorMessages) {
           notification.open({
             message: "서버 오류",
             description: `에러) ${status} 응답을 받았습니다. 서버 에러를 확인해주세요.`,
             icon: <FrownOutlined style={{ color: "#ff3333" }} />,
           });
+        } else {
         }
       }
     }
@@ -164,7 +180,7 @@ export default function ProductCreate() {
             </div>
             <div className="product_form" style={{ height: 60 }}>
               <p>제목</p>
-              <Form.Item name="product_name">
+              <Form.Item name="product_name" initialValue={product_name}>
                 <Input
                   onChange={nameOnChange}
                   value={nameValue}
@@ -174,7 +190,10 @@ export default function ProductCreate() {
             </div>
             <div className="product_form" style={{ height: 60 }}>
               <p>카테고리</p>
-              <Form.Item name="product_category" initialValue={11}>
+              <Form.Item
+                name="product_category"
+                initialValue={product_category}
+              >
                 <Select
                   style={{ width: "150px", height: "40px", right: "30px" }}
                   onChange={categoryOnChange}
@@ -197,7 +216,10 @@ export default function ProductCreate() {
             </div>
             <div className="product_form" style={{ height: 60 }}>
               <p>거래지역</p>
-              <Form.Item name="trading_location">
+              <Form.Item
+                name="trading_location"
+                initialValue={trading_location}
+              >
                 <Input
                   onChange={locationOnChange}
                   value={locationValue}
@@ -208,7 +230,10 @@ export default function ProductCreate() {
             </div>
             <div className="product_form" style={{ height: 60 }}>
               <p>상태</p>
-              <Form.Item name="product_condition" initialValue={"중고"}>
+              <Form.Item
+                name="product_condition"
+                initialValue={product_condition}
+              >
                 <Radio.Group
                   onChange={conditionOnChange}
                   value={conditionValue}
@@ -220,7 +245,7 @@ export default function ProductCreate() {
             </div>
             <div className="product_form" style={{ height: 60 }}>
               <p>교환</p>
-              <Form.Item name="exchange_or_not" initialValue={"교환불가"}>
+              <Form.Item name="exchange_or_not" initialValue={exchange_or_not}>
                 <Radio.Group onChange={exchangeOnChange} value={exchangeValue}>
                   <Radio value={"교환불가"}>교환불가</Radio>
                   <Radio value={"교환가능"}>교환가능</Radio>
@@ -229,7 +254,7 @@ export default function ProductCreate() {
             </div>
             <div className="product_form" style={{ height: 60 }}>
               <p>가격</p>
-              <Form.Item name="product_price">
+              <Form.Item name="product_price" initialValue={product_price}>
                 <Input
                   onChange={priceOnChange}
                   value={priceValue}
@@ -241,7 +266,7 @@ export default function ProductCreate() {
             </div>
             <div className="product_form" style={{ height: 165 }}>
               <p>설명</p>
-              <Form.Item name="product_desc">
+              <Form.Item name="product_desc" initialValue={product_desc}>
                 <Input.TextArea
                   onChange={descOnChange}
                   value={descValue}
@@ -253,7 +278,7 @@ export default function ProductCreate() {
             </div>
             <div className="product_form" style={{ height: 60 }}>
               <p>수량</p>
-              <Form.Item name="product_count" initialValue={1}>
+              <Form.Item name="product_count" initialValue={product_count}>
                 <Input
                   onChange={countOnChange}
                   value={countValue}

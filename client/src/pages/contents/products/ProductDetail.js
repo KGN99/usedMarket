@@ -44,10 +44,11 @@ export default function ProductDetail({ product }) {
       product_desc,
       images,
       product_count,
+      product_category,
       created_at,
     } = data;
 
-    const { id: user_id, username, avatar_url } = writer;
+    const { id: user_id } = writer;
     const slider_images = images.map((image) => ({
       url: API_HOST + image.product_image,
     }));
@@ -60,8 +61,8 @@ export default function ProductDetail({ product }) {
               headers,
             }
           );
-          console.log("success response :", response);
           navigate("/");
+          window.location.reload();
         } catch (error) {
           console.log(error.response);
           if (error.response) {

@@ -118,7 +118,8 @@ export default function ProfileUpdate() {
           headers,
         }
       );
-      navigate("/");
+      navigate(-1);
+      window.location.reload();
     } catch (error) {
       if (error.response) {
         const { status, data: fieldsErrorMessages } = error.response;

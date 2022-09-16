@@ -80,6 +80,7 @@ class ProductSerializers(serializers.ModelSerializer):
         instance.product_desc = validated_data.get('product_desc', instance.product_desc)
         instance.product_count = validated_data.get('product_count', instance.product_count)
         instance.product_category = validated_data.get('product_category', instance.product_category)
+        instance.save()
         ProductImage.objects.filter(product=instance).delete()
         images_data = self.context['request'].FILES
         for image_data in images_data.getlist('product_image'):
