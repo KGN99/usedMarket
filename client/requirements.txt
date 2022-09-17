@@ -10,3 +10,4 @@ react-cookie
 redux@4.1.2 react-redux @reduxjs/toolkit
 redux-persist
 react-simple-image-slider
+query-string

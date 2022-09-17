@@ -1,0 +1,13 @@
+@import "antd/dist/antd.css";
+
+.product_list_main {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(1, 1fr);
+  margin: 5px auto;
+  text-align: right;
+  align-items: right;
+  width: 850px;
+}

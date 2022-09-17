@@ -2,24 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Alert, Pagination } from "antd";
 import { useAxios } from "api";
 import { useSelector } from "react-redux";
-import { getUserData } from "utils/storage/Cookie";
-import ProductView from "./ProductView";
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
+import ProductView from "components/ProductView";
 import "scss/ProductList.scss";
 
-export default function ProductList() {
+export default function ProductSearch() {
   const [productList, setProductList] = useState();
   const [page, setPage] = useState(1);
   const offset = (page - 1) * 20;
-
+  const location = useLocation();
+  const query = queryString.parse(location.search);
   const pageOnChange = (value) => {
     setPage(value);
   };
   const { accessToken } = useSelector((state) => state.token);
-  const logedUserPk = getUserData();
   const headers = { Authorization: `Bearer ${accessToken}` };
 
   const [{ data: originProductList, loading, error }, refetch] = useAxios({
-    url: "/contents/products",
+    url: `/contents/products/?search=${query.search}`,
     headers,
   });
 

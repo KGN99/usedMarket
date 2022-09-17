@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserData } from "utils/storage/Cookie";
 import { Input, Space } from "antd";
+import Nav from "./Nav";
 import {
   DollarCircleOutlined,
   UserOutlined,
@@ -16,6 +17,10 @@ export default function Header() {
   // 스토어 Access Token 정보
   const { accessToken } = useSelector((state) => state.token);
   const logedUserPk = getUserData();
+
+  const onSearch = (value) => {
+    navigate(`/contents/products/search?search=${value}`);
+  };
   return (
     <div>
       <div className="top_bar" style={{ marginTop: 20, marginBottom: -15 }}>
@@ -48,13 +53,11 @@ export default function Header() {
       <hr size="1" color="#e8e8e8" />
 
       <div className="header">
-        <div
-          className="logo"
-          style={{ cursor: "pointer" }}
-          onClick={() => navigate("/")}
-        >
-          <p>중고거래</p>
-          <div className="nav"></div>
+        <div className="logo" style={{ cursor: "pointer" }}>
+          <p onClick={() => navigate("/")}>중고거래</p>
+          <div className="nav">
+            <Nav />
+          </div>
         </div>
         <div className="search">
           <Input.Search
@@ -62,6 +65,7 @@ export default function Header() {
             placeholder="검색어 입력"
             size="large"
             style={{ width: 400 }}
+            onSearch={onSearch}
           />
         </div>
         <div className="top_nav">
