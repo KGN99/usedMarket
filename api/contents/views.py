@@ -2,12 +2,18 @@ from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIVi
 from .models import Product,ProductImage
 from contents.serializers import ProductSerializers,ProductImageSerializer
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 # 상품 목록/생성
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializers
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    search_fields = ["product_name", "product_desc", "trading_location"]
+    filterset_fields = ['product_category', "writer"]
+    ordering = ["-id"]
 
 # 상품 조회/수정/삭제
 class ProductRetrieveUpdateDestroyGenericAPIView(RetrieveUpdateDestroyAPIView):

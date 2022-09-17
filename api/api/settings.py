@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     # third
     'corsheaders',
+    'django_filters',
     # local
     'accounts',
     'contents',
@@ -138,7 +139,7 @@ REST_FRAMEWORK = {
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ),
 
-    # 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 # dj-rest-auth JWT 설정
 REST_USE_JWT = True
