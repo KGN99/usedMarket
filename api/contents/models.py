@@ -47,3 +47,8 @@ class ProductImage(models.Model):
     writer = models.TextField()
     product = models.ForeignKey("Product",on_delete=models.CASCADE)
     product_image = models.ImageField(upload_to=product_images_url)
+
+class Comment(TimeStampedModel):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    message = models.TextField()
