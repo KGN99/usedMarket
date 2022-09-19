@@ -15,7 +15,6 @@ export default function ProductList() {
     setPage(value);
   };
   const { accessToken } = useSelector((state) => state.token);
-  const logedUserPk = getUserData();
   const headers = { Authorization: `Bearer ${accessToken}` };
 
   const [{ data: originProductList, loading, error }, refetch] = useAxios({

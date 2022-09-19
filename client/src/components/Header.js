@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserData } from "utils/storage/Cookie";
 import { Input, Space } from "antd";
+import { useDispatch } from "react-redux";
 import Nav from "./Nav";
 import {
   DollarCircleOutlined,
@@ -10,13 +11,20 @@ import {
   MessageOutlined,
 } from "@ant-design/icons";
 import "scss/Header.scss";
+import { DELETE_TOKEN } from "utils/store/Auth";
 
 export default function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // 스토어 Access Token 정보
-  const { accessToken } = useSelector((state) => state.token);
+  const { accessToken, expireTime } = useSelector((state) => state.token);
   const logedUserPk = getUserData();
+
+  // 로컬스토리지 데이터 조회시 시간 초과하면 초기화
+  if (expireTime < new Date().getTime()) {
+    dispatch(DELETE_TOKEN());
+  }
 
   const onSearch = (value) => {
     navigate(`/contents/products/search?search=${value}`);

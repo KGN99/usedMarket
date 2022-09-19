@@ -12,7 +12,7 @@ export const tokenSlice = createSlice({
     SET_TOKEN: (state, action) => {
       state.authenticated = true;
       state.accessToken = action.payload;
-      state.expireTime = new Date().getHours() + 1;
+      state.expireTime = new Date().getTime() + 60 * 60 * 1000;
     },
     DELETE_TOKEN: (state) => {
       state.authenticated = false;

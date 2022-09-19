@@ -20,8 +20,6 @@ export default function CommentList({ product }) {
 
   const handleCommentSave = async () => {
     const apiUrl = `/contents/products/${product.id}/comments/`;
-
-    console.group("handleCommentSave");
     try {
       const response = await axiosInstance.post(apiUrl, formData, { headers });
       setCommentComment("");
@@ -29,8 +27,6 @@ export default function CommentList({ product }) {
     } catch (error) {
       console.log(error.response);
     }
-
-    console.groupEnd();
   };
 
   return (

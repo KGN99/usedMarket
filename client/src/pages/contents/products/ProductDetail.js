@@ -124,6 +124,10 @@ export default function ProductDetail({ product }) {
               <p style={{ width: 80 }}>&bull;거래지역&nbsp;&nbsp;</p>
               {trading_location}
             </div>
+            <div style={{ display: "flex" }}>
+              <p style={{ width: 80 }}>&bull;상품개수&nbsp;&nbsp;</p>
+              {product_count}
+            </div>
             <div className="product_related_button">
               {parseInt(logedUserPk) === user_id ? (
                 <div>
@@ -192,7 +196,6 @@ export default function ProductDetail({ product }) {
           <p>상품정보</p>
           <hr style={{ width: "100%" }} size="1" color="#dddddd" />
           <div className="product_desc">{product_desc}</div>
-          <div>{product_count}</div>
         </div>
         <hr style={{ width: "100%" }} size="1" color="#000000" />
         <div className="product_detail_bottom">
