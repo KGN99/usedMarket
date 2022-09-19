@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Product,ProductImage
+from .models import Product,ProductImage,Comment
 
 # 이미지 리사이징
 def rescale(data, width, height, force=True):
@@ -53,8 +53,8 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         fields = ["id","product","product_image"]
 
-# 상품 목록/생성
-class ProductSerializers(serializers.ModelSerializer):
+# 상품 시리얼라이저
+class ProductSerializer(serializers.ModelSerializer):
     writer = AuthorSerializer(read_only=True)
     # ProductImage를 Product에서 같이 관리
     images = serializers.SerializerMethodField()
@@ -107,5 +107,26 @@ class ProductSerializers(serializers.ModelSerializer):
             "product_count",
             "product_category",
         ]
+
+# 댓글 시리얼라이저
+class CommentSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer(read_only=True)
+    product = ProductSerializer(read_only=True)
+
+    def create(self, validated_data):
+        comment = Comment.objects.create(author_id=self.context['request'].user.id,product_id=self.context["view"].kwargs.get("product_id"),**validated_data)
+        return comment
+
+    def update(self, instance, validated_data):
+        instance.message = validated_data.get('message', instance.message)
+        instance.save()
+        return instance
+
+    def delete(self,instance,validated_data):
+        return Comment.objects.filter(id=instance.id).delete()
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
 
 
