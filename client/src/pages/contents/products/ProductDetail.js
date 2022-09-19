@@ -12,6 +12,7 @@ import {
 import "scss/ProductDetail.scss";
 import { useNavigate, useLocation } from "react-router-dom";
 import { axiosInstance, useAxios } from "api";
+import CommentList from "./CommentList";
 import { Button, notification } from "antd";
 import SimpleImageSlider from "react-simple-image-slider";
 import moment from "moment";
@@ -197,7 +198,9 @@ export default function ProductDetail({ product }) {
         <div className="product_detail_bottom">
           <p>댓글</p>
           <hr style={{ width: "100%" }} size="1" color="#dddddd" />
-          <div className="comment"></div>
+          <div className="comment">
+            <CommentList product={data} />
+          </div>
         </div>
       </div>
     );

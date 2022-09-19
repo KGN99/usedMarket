@@ -24,3 +24,8 @@ class ProductRetrieveUpdateDestroyGenericAPIView(RetrieveUpdateDestroyAPIView):
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(product__id=self.kwargs["product_id"])
+        return qs
