@@ -45,7 +45,8 @@ export default function ProductDetail({ product }) {
       product_desc,
       images,
       product_count,
-      product_category,
+      is_like,
+      likes,
       created_at,
     } = data;
 
@@ -53,6 +54,23 @@ export default function ProductDetail({ product }) {
     const slider_images = images.map((image) => ({
       url: API_HOST + image.product_image,
     }));
+
+    const handleLike = async ({ like_set }) => {
+      const apiUrl = `/contents/products/${id}/like/`;
+      const method = like_set ? "POST" : "DELETE";
+
+      try {
+        const response = await axiosInstance({
+          url: apiUrl,
+          method,
+          headers,
+        });
+        window.location.reload();
+      } catch (error) {
+        console.log("error :", error);
+      }
+    };
+
     const deleteOnClick = async () => {
       if (window.confirm("정말 삭제합니까?")) {
         try {
@@ -104,7 +122,7 @@ export default function ProductDetail({ product }) {
             <div className="product_related_second" style={{ display: "flex" }}>
               <div style={{ marginRight: 15 }}>
                 <HeartFilled />
-                &nbsp;&nbsp; 추후 구현 &nbsp;&nbsp; |&nbsp;&nbsp;
+                &nbsp;&nbsp; {likes} &nbsp;&nbsp; |&nbsp;&nbsp;
                 <EyeFilled />
                 &nbsp;&nbsp; 추후 구현 &nbsp;&nbsp;|&nbsp;&nbsp;
                 <ClockCircleFilled />
@@ -161,19 +179,37 @@ export default function ProductDetail({ product }) {
                 </div>
               ) : (
                 <div>
-                  <Button
-                    style={{
-                      marginTop: 20,
-                      marginRight: 20,
-                      backgroundColor: "#dddddd",
-                      width: 180,
-                      height: 53,
-                      fontSize: 20,
-                      color: "white",
-                    }}
-                  >
-                    <HeartFilled />찜
-                  </Button>
+                  {is_like ? (
+                    <Button
+                      style={{
+                        marginTop: 20,
+                        marginRight: 20,
+                        backgroundColor: "#fe4d4d",
+                        width: 180,
+                        height: 53,
+                        fontSize: 20,
+                        color: "white",
+                      }}
+                      onClick={() => handleLike({ like_set: false })}
+                    >
+                      <HeartFilled />찜
+                    </Button>
+                  ) : (
+                    <Button
+                      style={{
+                        marginTop: 20,
+                        marginRight: 20,
+                        backgroundColor: "#dddddd",
+                        width: 180,
+                        height: 53,
+                        fontSize: 20,
+                        color: "white",
+                      }}
+                      onClick={() => handleLike({ like_set: true })}
+                    >
+                      <HeartFilled />찜
+                    </Button>
+                  )}
                   <Button
                     style={{
                       marginTop: 20,
