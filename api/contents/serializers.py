@@ -58,6 +58,8 @@ class ProductSerializer(serializers.ModelSerializer):
     writer = AuthorSerializer(read_only=True)
     # ProductImage를 Product에서 같이 관리
     images = serializers.SerializerMethodField()
+    is_like = serializers.SerializerMethodField("is_like_field")
+    likes = serializers.SerializerMethodField("likes_field")
 
     # 커스텀 시리얼라이저
     def get_images(self, obj):
@@ -90,6 +92,15 @@ class ProductSerializer(serializers.ModelSerializer):
     def delete(self,instance,validated_data):
         return Product.objects.filter(id=instance.id).delete()
 
+    def likes_field(self,product):
+        return product.product_like.count()
+
+    def is_like_field(self, product):
+        if "request" in self.context:
+            user = self.context["request"].user
+            return product.product_like.filter(pk=user.pk).exists()
+        return False
+
     class Meta:
         model = Product
         fields = [
@@ -106,6 +117,9 @@ class ProductSerializer(serializers.ModelSerializer):
             "product_desc",
             "product_count",
             "product_category",
+            "product_like",
+            "is_like",
+            "likes",
         ]
 
 # 댓글 시리얼라이저

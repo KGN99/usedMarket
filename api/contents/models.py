@@ -33,9 +33,14 @@ class Product(TimeStampedModel):
     product_desc = models.TextField(verbose_name="상품 정보")
     product_count = models.IntegerField(verbose_name="수량")
     product_category = models.ForeignKey("Category",default="11",related_name="product_category_set",on_delete=models.CASCADE)
+    product_like = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="like_product_set",
+                                          verbose_name="찜")
 
     def get_absolute_url(self):
         return reverse("product:product_detail", args=[self.id])
+
+    def is_like_user(self, user):
+        return self.product_like.filter(id=user.id).exists()
 
 class Category(TimeStampedModel):
     category_name = models.CharField(max_length=255,unique=True)
