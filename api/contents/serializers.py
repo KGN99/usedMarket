@@ -60,6 +60,7 @@ class ProductSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField()
     is_like = serializers.SerializerMethodField("is_like_field")
     likes = serializers.SerializerMethodField("likes_field")
+    views = serializers.SerializerMethodField("views_field")
 
     # 커스텀 시리얼라이저
     def get_images(self, obj):
@@ -101,6 +102,9 @@ class ProductSerializer(serializers.ModelSerializer):
             return product.product_like.filter(pk=user.pk).exists()
         return False
 
+    def views_field(self,product):
+        return product.product_views.count()
+
     class Meta:
         model = Product
         fields = [
@@ -118,6 +122,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "product_count",
             "product_category",
             "product_like",
+            "views",
             "is_like",
             "likes",
         ]

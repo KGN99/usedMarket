@@ -35,6 +35,7 @@ class Product(TimeStampedModel):
     product_category = models.ForeignKey("Category",default="11",related_name="product_category_set",on_delete=models.CASCADE)
     product_like = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="like_product_set",
                                           verbose_name="찜")
+    product_views = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="view_product_set",verbose_name="조회수")
 
     def get_absolute_url(self):
         return reverse("product:product_detail", args=[self.id])

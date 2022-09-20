@@ -29,6 +29,12 @@ class ProductViewSet(ModelViewSet):
         product.product_like.remove(self.request.user)
         return Response(status.HTTP_204_NO_CONTENT)
 
+    @action(detail=True, methods=["get", "post"])
+    def views(self, request, pk):
+        product = self.get_object()
+        product.product_views.add(self.request.user)
+        return Response(status.HTTP_201_CREATED)
+
 # 상품 조회/수정/삭제
 class ProductRetrieveUpdateDestroyGenericAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
