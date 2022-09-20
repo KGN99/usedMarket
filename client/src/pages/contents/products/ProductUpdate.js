@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { getUserData } from "utils/storage/Cookie";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";

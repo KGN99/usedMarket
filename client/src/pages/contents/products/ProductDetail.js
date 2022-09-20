@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { API_HOST } from "utils/Constants";
@@ -10,7 +10,7 @@ import {
   FrownOutlined,
 } from "@ant-design/icons";
 import "scss/ProductDetail.scss";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { axiosInstance, useAxios } from "api";
 import CommentList from "./CommentList";
 import { Button, notification } from "antd";
@@ -20,10 +20,9 @@ import "moment/locale/ko";
 
 moment.locale("ko");
 
-export default function ProductDetail({ product }) {
+export default function ProductDetail() {
   const params = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
   const [fieldErrors, setFieldErrors] = useState({});
   const logedUserPk = getUserData();
   const { accessToken } = useSelector((state) => state.token);
@@ -33,6 +32,7 @@ export default function ProductDetail({ product }) {
     url: `/contents/products/${params.id}/`,
     headers,
   });
+
   if (data) {
     const {
       id,
@@ -47,6 +47,7 @@ export default function ProductDetail({ product }) {
       product_count,
       is_like,
       likes,
+      views,
       created_at,
     } = data;
 
@@ -124,7 +125,7 @@ export default function ProductDetail({ product }) {
                 <HeartFilled />
                 &nbsp;&nbsp; {likes} &nbsp;&nbsp; |&nbsp;&nbsp;
                 <EyeFilled />
-                &nbsp;&nbsp; 추후 구현 &nbsp;&nbsp;|&nbsp;&nbsp;
+                &nbsp;&nbsp; {views} &nbsp;&nbsp;|&nbsp;&nbsp;
                 <ClockCircleFilled />
                 &nbsp;&nbsp;
                 <span>{moment(created_at).fromNow()}</span>
