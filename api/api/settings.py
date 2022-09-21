@@ -35,9 +35,11 @@ INSTALLED_APPS = [
     # third
     'corsheaders',
     'django_filters',
+    'channels',
     # local
     'accounts',
     'contents',
+    'chats',
 ]
 SITE_ID = 1
 
