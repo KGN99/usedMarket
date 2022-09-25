@@ -38,23 +38,25 @@ services:
     depends_on:
       - api
 
-  client_web:
+  web:
     restart: always
-    container_name: nginx_client
-    build: ./nginx/client
-    ports:
-      - "3000:8080"
-    depends_on:
-      - client
-
-  api_web:
-    restart: always
-    container_name: nginx_api
-    build: ./nginx/api
+    container_name: nginx
+    build: ./nginx
     volumes:
       - D:/a_KGN/usedMarket/api/static:/back/static
       - D:/a_KGN/usedMarket/api/media:/back/media
     ports:
       - "8000:8081"
+      - "3000:8080"
     depends_on:
       - api
+      - client
+
+  redis:
+    image: redis:6
+    environment:
+      - REDIS_HOST=client_web
+      - REDIS_PORT=6379
+
+    ports:
+      - "6379:6379"

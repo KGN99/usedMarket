@@ -35,11 +35,9 @@ INSTALLED_APPS = [
     # third
     'corsheaders',
     'django_filters',
-    'channels',
     # local
     'accounts',
     'contents',
-    'chats',
 ]
 SITE_ID = 1
 
@@ -72,7 +70,7 @@ TEMPLATES = [
         },
     },
 ]
-
+ASGI_APPLICATION = 'api.asgi.application'
 WSGI_APPLICATION = 'api.wsgi.application'
 
 
@@ -175,4 +173,15 @@ if DEBUG:
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "API": {
+            "hosts": [(os.environ.get("REDIS_HOST"), os.environ.get("REDIS_PORT"))],
+        },
+    },
 }

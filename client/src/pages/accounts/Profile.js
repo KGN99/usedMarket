@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAxios } from "api";
-import { Button } from "antd";
+import { Alert, Button } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserData } from "utils/storage/Cookie";
 import { API_HOST } from "utils/Constants";
+import ProductView from "components/ProductView";
 import "scss/Profile.scss";
 
 export default function Profile() {
+  const [productList, setProductList] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
 
@@ -19,6 +21,15 @@ export default function Profile() {
     url: `/accounts/profile/${params.id}`,
     headers,
   });
+
+  const [{ data: myProductsList }] = useAxios({
+    url: `/contents/products/?writer=${params.id}`,
+    headers,
+  });
+
+  useEffect(() => {
+    setProductList(myProductsList);
+  }, [myProductsList]);
 
   if (userProfileData) {
     const { email, username, avatar_url } = userProfileData;
@@ -80,6 +91,15 @@ export default function Profile() {
         <hr style={{ width: "100%" }} size="1" color="#000000" />
         <div className="myProducts">내 상품</div>
         <hr style={{ width: "100%" }} size="1" color="#bbbbbb" />
+        <div className="product_list" style={{ marginBottom: 50 }}>
+          {productList && productList.length === 0 && (
+            <Alert type="warning" message="상품이 없습니다. :-(" />
+          )}
+          {productList &&
+            productList.map((product) => (
+              <ProductView product={product} key={product.id} />
+            ))}
+        </div>
       </div>
     );
   }
