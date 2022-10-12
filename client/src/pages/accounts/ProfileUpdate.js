@@ -147,7 +147,7 @@ export default function ProfileUpdate() {
   };
 
   const [{ data, loading, error }, refetch] = useAxios({
-    url: `/accounts/profile/${logedUserPk}/update`,
+    url: `/accounts/${logedUserPk}/update`,
     headers,
   });
   if (data) {

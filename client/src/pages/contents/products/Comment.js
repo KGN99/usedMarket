@@ -42,7 +42,7 @@ export default function Comment({ comment }) {
     if (window.confirm("정말 삭제합니까?")) {
       const apiUrl = `/contents/products/${product_id}/comments/${comment_id}/`;
       try {
-        const response = await axiosInstance.delete(apiUrl, formData, {
+        const response = await axiosInstance.delete(apiUrl, {
           headers,
         });
         window.location.reload();

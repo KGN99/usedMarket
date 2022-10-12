@@ -51,7 +51,7 @@ export default function Header() {
             )}
             <div
               style={{ cursor: "pointer" }}
-              onClick={() => navigate(`accounts/profile/${logedUserPk}`)}
+              onClick={() => navigate(`accounts/${logedUserPk}`)}
             >
               <p>내상점</p>
             </div>
