@@ -70,7 +70,6 @@ TEMPLATES = [
         },
     },
 ]
-ASGI_APPLICATION = 'api.asgi.application'
 WSGI_APPLICATION = 'api.wsgi.application'
 
 
@@ -175,7 +174,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
-
+ASGI_APPLICATION = 'api.asgi.application'
 
 CHANNEL_LAYERS = {
     "default": {

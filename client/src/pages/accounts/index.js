@@ -16,8 +16,8 @@ export default function AccountsRoutes() {
       <Route path={"/login"} element={<Login />} />
       <Route path={"/logout"} element={<Logout />} />
       <Route element={<LoginRequiredRoute />}>
-        <Route path={"/profile/:id"} element={<Profile />} />
-        <Route path={"/profile/:id/update"} element={<ProfileUpdate />} />
+        <Route path={"/:id"} element={<Profile />} />
+        <Route path={"/:id/update"} element={<ProfileUpdate />} />
         <Route path={"/password_change"} element={<PasswordChange />} />
       </Route>
       <Route path="/*" element={<NotFound />} />

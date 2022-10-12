@@ -7,3 +7,4 @@ django-allauth
 djangorestframework-simplejwt
 pillow
 django-cors-headers
+channels

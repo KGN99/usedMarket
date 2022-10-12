@@ -5,6 +5,7 @@ import AccountsRoutes from "./accounts";
 import ContentsRoutes from "./contents";
 import LoginRequiredRoute from "components/LoginRequiredRoute";
 import NotFound from "components/NotFound";
+import ChattingsRoutes from "./chattings";
 import Home from "./Home";
 
 export default function Root() {
@@ -19,6 +20,7 @@ export default function Root() {
           <Route path="/accounts/*" element={<AccountsRoutes />} />
           <Route path="/*" element={<NotFound />} />
         </Route>
+        <Route path="/chattings/*" element={<ChattingsRoutes />} />
       </Routes>
     </BrowserRouter>
   );

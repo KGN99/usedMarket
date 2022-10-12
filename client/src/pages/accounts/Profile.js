@@ -18,7 +18,7 @@ export default function Profile() {
   const headers = { Authorization: `Bearer ${accessToken}` };
 
   const [{ data: userProfileData, loading, error }, refetch] = useAxios({
-    url: `/accounts/profile/${params.id}`,
+    url: `/accounts/${params.id}`,
     headers,
   });
 
@@ -62,7 +62,7 @@ export default function Profile() {
                         color: "white",
                       }}
                       onClick={() =>
-                        navigate(`/accounts/profile/${logedUserPk}/update`)
+                        navigate(`/accounts/${logedUserPk}/update`)
                       }
                     >
                       회원정보 수정

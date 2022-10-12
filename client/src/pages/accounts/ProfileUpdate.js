@@ -112,7 +112,7 @@ export default function ProfileUpdate() {
 
     try {
       const response = await axiosInstance.put(
-        `/accounts/profile/${logedUserPk}/update`,
+        `/accounts/${logedUserPk}/update`,
         formData,
         {
           headers,
