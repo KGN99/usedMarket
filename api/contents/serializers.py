@@ -55,6 +55,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 # 상품 시리얼라이저
 class ProductSerializer(serializers.ModelSerializer):
+    product_like = AuthorSerializer(many=True,required=False)
     writer = AuthorSerializer(read_only=True)
     # ProductImage를 Product에서 같이 관리
     images = serializers.SerializerMethodField()

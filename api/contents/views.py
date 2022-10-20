@@ -10,12 +10,22 @@ from rest_framework.response import Response
 
 # 상품 목록/생성
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = (
+        Product.objects.all()
+        .select_related("writer")
+        .prefetch_related("product_like", "product_views")
+    )
+
     serializer_class = ProductSerializer
     filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
     search_fields = ["product_name", "product_desc", "trading_location"]
     filterset_fields = ['product_category', "writer"]
     ordering = ["-id"]
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        return context
 
     @action(detail=True, methods=["get", "post"])
     def like(self, request, pk):

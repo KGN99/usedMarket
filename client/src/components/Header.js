@@ -78,11 +78,17 @@ export default function Header() {
         </div>
         <div className="top_nav">
           <Space>
-            <div style={{ cursor: "pointer" }}>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/contents/products/create")}
+            >
               <DollarCircleOutlined />
               판매하기
             </div>
-            <div style={{ cursor: "pointer" }}>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(`accounts/${logedUserPk}`)}
+            >
               <UserOutlined />
               내상점
             </div>

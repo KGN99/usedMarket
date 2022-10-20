@@ -142,7 +142,6 @@ export default function ProductCreate() {
   return (
     <>
       <div>
-        <hr size="1" color="#e8e8e8" />
         <Form onFinish={handleFinish} autoComplete={"false"}>
           <div className="product_create">
             <div className="basic_information">기본정보</div>

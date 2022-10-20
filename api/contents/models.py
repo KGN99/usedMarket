@@ -33,9 +33,8 @@ class Product(TimeStampedModel):
     product_desc = models.TextField(verbose_name="상품 정보")
     product_count = models.IntegerField(verbose_name="수량")
     product_category = models.ForeignKey("Category",default="11",related_name="product_category_set",on_delete=models.CASCADE)
-    product_like = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="like_product_set",
-                                          verbose_name="찜")
-    product_views = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="view_product_set",verbose_name="조회수")
+    product_like = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="product_like", verbose_name="product_like")
+    product_views = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="product_views",verbose_name="product_views")
 
     def get_absolute_url(self):
         return reverse("product:product_detail", args=[self.id])
